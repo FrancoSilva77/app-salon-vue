@@ -4,12 +4,13 @@ import ServiceAPI from '@/api/ServiceAPI'
 
 export const useServicesStore = defineStore('services', () => {
 
+  const services = ref([])
+  
   onMounted(async () => {
     
     try {
       const { data } = await ServiceAPI.all()
-      console.log(data);
-      console.log(data);
+      services.value = data
       
     } catch (error) {
       console.log(error)
@@ -17,5 +18,7 @@ export const useServicesStore = defineStore('services', () => {
     
   })
 
-  return {}
+  return {
+    services
+  }
 })
