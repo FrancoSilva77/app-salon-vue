@@ -12,6 +12,7 @@ const user = useUserStore()
         <p class="text-white text-right">Hola: {{ user.getUserName }}</p>
         <button
           type="button"
+          @click="user.logout"
           class="bg-red-600 hover:bg-red-700 p-2 text-white uppercase text-xs font-extrabold rounded-lg"
         >
           Cerrar Sesión
