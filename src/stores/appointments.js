@@ -29,8 +29,6 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     // Obtenemos las citas
     const { data } = await AppointmentApi.getByDate(date.value)
     appointmentsByDate.value = data
-
-    console.log(data)
   })
 
   function onServiceSelected(service) {
