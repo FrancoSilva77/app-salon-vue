@@ -1,6 +1,9 @@
 <script setup>
 import { formatCurrency } from '@/utils'
 import { displayDate } from '@/utils/date'
+import { useAppointmentsStore } from '@/stores/appointments'
+
+const appointments = useAppointmentsStore()
 
 defineProps({
   appointment: {
@@ -37,6 +40,7 @@ defineProps({
         Editar Cita
       </RouterLink>
       <button
+        @click="appointments.cancelAppointment(appointment._id)"
         class="bg-red-600 rounded-lg p-3 text-white text-sm uppercase font-black flex-1 md:flex-none"
       >
         Cancelar Cita
