@@ -2,9 +2,11 @@ import { ref, computed, onMounted, inject, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 import AppointmentApi from '@/api/AppointmentApi'
-import { convertToISO } from '@/utils/date'
+import { convertToDDMMYYYY, convertToISO } from '@/utils/date'
+import { useUserStore } from './user'
 
 export const useAppointmentsStore = defineStore('appointments', () => {
+  const appointmentId = ref('')
   const services = ref([])
   const date = ref('')
   const hours = ref([])
@@ -13,6 +15,7 @@ export const useAppointmentsStore = defineStore('appointments', () => {
 
   const toast = inject('toast')
   const router = useRouter()
+  const user = useUserStore()
 
   onMounted(() => {
     const startHour = 10
@@ -28,8 +31,25 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     if (date.value === '') return
     // Obtenemos las citas
     const { data } = await AppointmentApi.getByDate(date.value)
-    appointmentsByDate.value = data
+
+    if (appointmentId.value) {
+      // Se habilita la hora de la cita que queremos actualizar
+      appointmentsByDate.value = data.filter(
+        (appointment) => appointment._id !== appointmentId.value
+      )
+      time.value = data.filter((appointment) => appointment._id === appointmentId.value)[0].time
+    } else {
+      appointmentsByDate.value = data
+    }
   })
+
+  function setSelectedAppointment(appointment) {
+    services.value = appointment.services
+    date.value = convertToDDMMYYYY(appointment.date)
+    time.value = appointment.time
+    appointmentId.value = appointment._id
+    console.log(appointmentId.value)
+  }
 
   function onServiceSelected(service) {
     if (services.value.some((selectedService) => selectedService._id === service._id)) {
@@ -46,7 +66,7 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     }
   }
 
-  async function createAppointment() {
+  async function saveAppointment() {
     const appointment = {
       services: services.value.map((service) => service._id),
       date: convertToISO(date.value),
@@ -54,20 +74,34 @@ export const useAppointmentsStore = defineStore('appointments', () => {
       totalAmount: totalAmount.value
     }
 
-    try {
-      const { data } = await AppointmentApi.create(appointment)
-      toast.open({
-        message: data.msg,
-        type: 'success'
-      })
-      clearAppontmentData()
-      router.push({ name: 'my-appointments' })
-    } catch (error) {
-      console.log(error)
+    if (appointmentId.value) {
+      try {
+        const { data } = await AppointmentApi.update(appointmentId.value, appointment)
+        toast.open({
+          message: data.msg,
+          type: 'success'
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      try {
+        const { data } = await AppointmentApi.create(appointment)
+        toast.open({
+          message: data.msg,
+          type: 'success'
+        })
+      } catch (error) {
+        console.log(error)
+      }
     }
+    clearAppointmentData()
+    user.getUserAppointments()
+    router.push({ name: 'my-appointments' })
   }
 
-  function clearAppontmentData() {
+  function clearAppointmentData() {
+    appointmentId.value = ''
     services.value = []
     date.value = ''
     time.value = ''
@@ -102,8 +136,10 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     date,
     hours,
     time,
+    setSelectedAppointment,
     onServiceSelected,
-    createAppointment,
+    saveAppointment,
+    clearAppointmentData,
     isServiceSelected,
     noServicesSelected,
     totalAmount,
