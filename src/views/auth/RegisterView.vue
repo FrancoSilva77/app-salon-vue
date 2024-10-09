@@ -76,7 +76,7 @@ const handleSubmit = async ({ password_confirm, ...formData }) => {
       placeholder="Repite Tu Contraseña"
       validation="required|confirm"
       :validation-messages="{
-        required: 'La contraseña es obligatoria',
+        required: 'Repetir contraseña es obligatoria',
         confirm: 'Las contraseñas no son iguales'
       }"
     />
