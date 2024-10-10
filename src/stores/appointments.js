@@ -1,7 +1,7 @@
 import { ref, computed, onMounted, inject, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
-import AppointmentApi from '@/api/AppointmentApi'
+import AppointmentApi from '@/api/AppointmentAPI'
 import { convertToDDMMYYYY, convertToISO } from '@/utils/date'
 import { useUserStore } from './user'
 

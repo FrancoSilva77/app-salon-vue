@@ -2,7 +2,7 @@ import { ref, onMounted, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 import AuthAPI from '@/api/AuthAPI'
-import AppointmentApi from '@/api/AppointmentApi'
+import AppointmentApi from '@/api/AppointmentAPI'
 
 export const useUserStore = defineStore('users', () => {
   const router = useRouter()
