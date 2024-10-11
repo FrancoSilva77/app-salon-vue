@@ -23,13 +23,16 @@ export const useUserStore = defineStore('users', () => {
   })
 
   async function getUserAppointments() {
-    const { data } = await AppointmentApi.getUserAppointments(user.value._id)
-    userAppointments.value = data
+    if (user.value && user.value._id) {
+      const { data } = await AppointmentApi.getUserAppointments(user.value._id)
+      userAppointments.value = data
+    }
   }
 
   function logout() {
     localStorage.removeItem('AUTH_TOKEN')
     user.value = {}
+    userAppointments.value = []
     router.push({ name: 'login' })
   }
 

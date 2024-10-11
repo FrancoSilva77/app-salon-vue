@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import AppointmentApi from '@/api/AppointmentApi'
+import AppointmentApi from '@/api/AppointmentAPI'
 import { useAppointmentsStore } from '@/stores/appointments'
 
 const appointments = useAppointmentsStore()
