@@ -4,10 +4,9 @@ const user = useUserStore()
 </script>
 
 <template>
-  <div class="flex justify-between">
+  <div class="mt-5 flex justify-between">
     <div>
-      <h1 class="text-2xl lg:text-6xl font-black text-white">App Salón</h1>
-      <h2 class="text-xl lg:text-2xl font-black text-white">Panel de Administración</h2>
+      <h2 class="text-xl lg:text-3xl font-black text-white">Panel de Administración</h2>
     </div>
 
     <div class="flex flex-col space-y-5">
