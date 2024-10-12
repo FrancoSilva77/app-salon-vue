@@ -16,7 +16,10 @@ const route = useRoute()
       </div>
     </div>
 
-    <div class="md:w-2/3 px-10 py-5 min-h-full overflow-y-scroll">
+    <div
+      class="px-10 py-5 min-h-full overflow-y-scroll"
+      :class="route.path.startsWith('/admin') ? 'md:w-5/6' : 'md:w-2/3'"
+    >
       <RouterView />
     </div>
   </div>

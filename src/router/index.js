@@ -25,12 +25,17 @@ const router = createRouter({
         {
           path: 'servicios',
           name: 'admin-services',
-          component: () => import('../views/admin/AdminServices.vue'),
+          component: () => import('../views/admin/AdminServicesLayout.vue'),
           children: [
+            {
+              path: '',
+              name: 'view-services',
+              component: () => import('../views/admin/ServicesView.vue')
+            },
             {
               path: 'nuevo',
               name: 'new-service',
-              component: ()=> import('../views/admin/NewSeviceView.vue')
+              component: () => import('../views/admin/NewSeviceView.vue')
             }
           ]
         }
