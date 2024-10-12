@@ -23,9 +23,16 @@ const router = createRouter({
           component: () => import('../views/admin/AppointmentsView.vue')
         },
         {
-          path: 'services',
+          path: 'servicios',
           name: 'admin-services',
-          component: () => import('../views/admin/AdminServices.vue')
+          component: () => import('../views/admin/AdminServices.vue'),
+          children: [
+            {
+              path: 'nuevo',
+              name: 'new-service',
+              component: ()=> import('../views/admin/NewSeviceView.vue')
+            }
+          ]
         }
       ]
     },

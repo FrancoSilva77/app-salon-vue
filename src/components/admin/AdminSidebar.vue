@@ -2,11 +2,6 @@
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-
-const adminNavegation = [
-  { name: 'admin-appointments', text: 'Admin' },
-  { name: 'admin-services', text: 'Servicios' }
-]
 </script>
 
 <template>
@@ -19,12 +14,19 @@ const adminNavegation = [
 
     <nav class="flex flex-col">
       <RouterLink
-        v-for="link in adminNavegation"
-        :to="{ name: link.name }"
+        :to="{ name: 'admin-appointments' }"
         class="font-bold text-lg border-t border-blue-200 p-3 last-of-type:border-b"
-        :class="route.name === link.name ? 'bg-blue-800 text-white' : ''"
+        :class="route.name === 'admin-appointments' ? 'bg-blue-800 text-white' : ''"
       >
-        {{ link.text }}
+        Citas
+      </RouterLink>
+
+      <RouterLink
+        :to="{ name: 'admin-services' }"
+        class="font-bold text-lg border-t border-blue-200 p-3 last-of-type:border-b"
+        :class="route.path.includes('servicios') ? 'bg-blue-800 text-white' : ''"
+      >
+        Servicios
       </RouterLink>
     </nav>
   </div>
