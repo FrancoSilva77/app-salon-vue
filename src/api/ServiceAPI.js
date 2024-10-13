@@ -12,5 +12,8 @@ export default {
   },
   update(id, data) {
     return api.put(`/services/${id}`, data)
+  },
+  delete(id) {
+    return api.delete(`/services/${id}`)
   }
 }

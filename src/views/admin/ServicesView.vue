@@ -13,6 +13,6 @@ const services = useServicesStore()
   >
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10">
-    <AdminService v-for="service in services.services" :key="service.id" :service="service" />
+    <AdminService v-for="service in services.services" :key="service._id" :service="service" />
   </div>
 </template>

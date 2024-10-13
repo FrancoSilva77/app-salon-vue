@@ -1,12 +1,14 @@
 <script setup>
+import { useServicesStore } from '@/stores/services'
 import { formatCurrency } from '@/utils'
+
+const services = useServicesStore()
 
 defineProps({
   service: {
     type: Object
   }
 })
-
 </script>
 
 <template>
@@ -20,7 +22,12 @@ defineProps({
         class="bg-orange-500 px-2 py-1 rounded hover:bg-orange-600"
         >Editar</RouterLink
       >
-      <button class="bg-red-500 px-2 py-1 rounded hover:bg-red-600">Eliminar</button>
+      <button
+        @click="services.deleteService(service._id)"
+        class="bg-red-500 px-2 py-1 rounded hover:bg-red-600"
+      >
+        Eliminar
+      </button>
     </div>
   </div>
 </template>
