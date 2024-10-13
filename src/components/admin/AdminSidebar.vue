@@ -22,7 +22,7 @@ const route = useRoute()
       </RouterLink>
 
       <RouterLink
-        :to="{ name: 'admin-services' }"
+        :to="{ name: 'view-services' }"
         class="font-bold text-lg border-t border-blue-200 p-3 last-of-type:border-b"
         :class="route.path.includes('servicios') ? 'bg-blue-800 text-white' : ''"
       >
