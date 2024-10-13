@@ -36,6 +36,11 @@ const router = createRouter({
               path: 'nuevo',
               name: 'new-service',
               component: () => import('../views/admin/NewSeviceView.vue')
+            },
+            {
+              path: ':id/editar',
+              name: 'edit-service',
+              component: () => import('../views/admin/EditServiceView.vue')
             }
           ]
         }
@@ -69,7 +74,7 @@ const router = createRouter({
           ]
         },
         {
-          path: ':id/editar',
+          path: 'editar/:id',
           component: () => import('../views/appointments/EditAppointmentLayout.vue'),
           children: [
             {

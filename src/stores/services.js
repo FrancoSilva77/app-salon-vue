@@ -37,8 +37,26 @@ export const useServicesStore = defineStore('services', () => {
     }
   }
 
+  async function updateService(id, formData) {
+    try {
+      const { data } = await ServiceAPI.update(id, formData)
+      toast.open({
+        message: data.msg,
+        type: 'success'
+      })
+      await getServices()
+      router.push({ name: 'view-services' })
+    } catch (error) {
+      toast.open({
+        message: error.response.data.msg,
+        type: 'error'
+      })
+    }
+  }
+
   return {
     services,
-    saveService
+    saveService,
+    updateService
   }
 })
