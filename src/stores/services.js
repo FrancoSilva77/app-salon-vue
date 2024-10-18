@@ -6,10 +6,15 @@ import router from '@/router'
 export const useServicesStore = defineStore('services', () => {
   const toast = inject('toast')
   const services = ref([])
+  const currentPage = ref(1)
+  const totalPages = ref(1)
+  const totalServices = ref(0)
+  const limit = ref(6)
 
   onMounted(async () => {
     try {
-      await getServices()
+      // await getServices()
+      await getServicesPaginated()
     } catch (error) {
       console.log(error)
     }
@@ -17,7 +22,30 @@ export const useServicesStore = defineStore('services', () => {
 
   async function getServices() {
     const { data } = await ServiceAPI.all()
-    services.value = data
+    services.value = data.services
+  }
+
+  async function getServicesPaginated() {
+    const { data } = await ServiceAPI.allPaginate(currentPage.value, limit.value)
+
+    services.value = data.services
+    currentPage.value = data.currentPage
+    totalPages.value = data.totalPages
+    totalServices.value = data.totalServices
+  }
+
+  async function prevServices() {
+    if (currentPage.value > 1) {
+      currentPage.value = currentPage.value - 1
+      await getServicesPaginated()
+    }
+  }
+
+  async function nextServices() {
+    if (currentPage.value < totalPages.value) {
+      currentPage.value++
+      await getServicesPaginated()
+    }
   }
 
   async function saveService(formData) {
@@ -55,11 +83,11 @@ export const useServicesStore = defineStore('services', () => {
   }
 
   async function deleteService(id) {
-    console.log(id);
-    
+    console.log(id)
+
     try {
       const { data } = await ServiceAPI.delete(id)
-      console.log(data, id);
+      console.log(data, id)
       toast.open({
         message: data.msg,
         type: 'success'
@@ -75,6 +103,10 @@ export const useServicesStore = defineStore('services', () => {
 
   return {
     services,
+    currentPage,
+    totalPages,
+    prevServices,
+    nextServices,
     saveService,
     updateService,
     deleteService

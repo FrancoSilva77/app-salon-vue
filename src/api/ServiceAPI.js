@@ -4,6 +4,9 @@ export default {
   all() {
     return api.get('/services')
   },
+  allPaginate(page, limit) {
+    return api.get(`/services?page=${page}&limit=${limit}`)
+  },
   create(data) {
     return api.post('/services', data)
   },
