@@ -1,8 +1,13 @@
 <script setup>
 import ServiceItem from '@/components/ServiceItem.vue'
 import { useServicesStore } from '@/stores/services'
+import { onMounted } from 'vue'
 
 const services = useServicesStore()
+
+onMounted(async () => {
+  await services.getServices()
+})
 </script>
 
 <template>

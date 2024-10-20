@@ -11,15 +11,6 @@ export const useServicesStore = defineStore('services', () => {
   const totalServices = ref(0)
   const limit = ref(6)
 
-  onMounted(async () => {
-    try {
-      // await getServices()
-      await getServicesPaginated()
-    } catch (error) {
-      console.log(error)
-    }
-  })
-
   async function getServices() {
     const { data } = await ServiceAPI.all()
     services.value = data.services
@@ -105,6 +96,8 @@ export const useServicesStore = defineStore('services', () => {
     services,
     currentPage,
     totalPages,
+    getServicesPaginated,
+    getServices,
     prevServices,
     nextServices,
     saveService,

@@ -1,8 +1,13 @@
 <script setup>
+import { onMounted } from 'vue'
 import AdminService from '@/components/admin/AdminService.vue'
 import { useServicesStore } from '@/stores/services'
 
 const services = useServicesStore()
+
+onMounted(async () => {
+  await services.getServicesPaginated()
+})
 </script>
 
 <template>
@@ -25,7 +30,9 @@ const services = useServicesStore()
     >
       Anterior
     </button>
-    <span class="text-base text-white">Página {{ services.currentPage }}</span>
+    <span class="text-base text-white"
+      >Página {{ services.currentPage }} de {{ services.totalPages }}</span
+    >
     <button
       @click="services.nextServices"
       :disabled="services.currentPage >= services.totalPages"
